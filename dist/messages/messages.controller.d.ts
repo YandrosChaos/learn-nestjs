@@ -1,7 +1,10 @@
 import { CreateMsgDto } from "src/messages/dto/create-msg-dto.interface";
+import { MessagesService } from "./messages.service";
 export declare class MessagesController {
-    create(createMsgDto: CreateMsgDto): string;
-    getAll(): string;
-    update(newMsg: CreateMsgDto): string;
-    delete(): string;
+    private msgService;
+    constructor(msgService: MessagesService);
+    create(createMsgDto: CreateMsgDto, response: any): void;
+    getAll(response: any): void;
+    update(newMsg: CreateMsgDto, response: any, id: any): void;
+    delete(response: any, id: any): void;
 }

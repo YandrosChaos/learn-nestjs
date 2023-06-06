@@ -23,12 +23,12 @@ export class MessagesService {
     return this.msgRepository.save(newMsg);
   }
 
-  async update(updatedMsg: CreateMsgDto) {
+  async update(id: number, updatedMsg: CreateMsgDto) {
     const msg = await this.msgRepository.findOne({
-      where: { id: updatedMsg.id },
+      where: { id: id },
     });
 
-    msg.nick = msg.nick;
+    msg.nick = updatedMsg.nick;
     msg.msg = updatedMsg.msg;
 
     return this.msgRepository.save(msg);

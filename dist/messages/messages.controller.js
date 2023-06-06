@@ -14,47 +14,86 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessagesController = void 0;
 const common_1 = require("@nestjs/common");
+const messages_service_1 = require("./messages.service");
 let MessagesController = exports.MessagesController = class MessagesController {
-    create(createMsgDto) {
-        return "Created msg";
+    constructor(msgService) {
+        this.msgService = msgService;
     }
-    getAll() {
-        return "msg list";
+    create(createMsgDto, response) {
+        this.msgService
+            .create(createMsgDto)
+            .then((msg) => {
+            response.status(common_1.HttpStatus.CREATED).json(msg);
+        })
+            .catch(() => response
+            .status(common_1.HttpStatus.FORBIDDEN)
+            .json({ msg: "error en la creacion" }));
     }
-    update(newMsg) {
-        return "updated msg";
+    getAll(response) {
+        this.msgService
+            .getAll()
+            .then((msg) => {
+            response.status(common_1.HttpStatus.OK).json(msg);
+        })
+            .catch(() => response
+            .status(common_1.HttpStatus.FORBIDDEN)
+            .json({ msg: "error en la obtencion" }));
     }
-    delete() {
-        return "deleted msg";
+    update(newMsg, response, id) {
+        this.msgService
+            .update(id, newMsg)
+            .then((msg) => {
+            response.status(common_1.HttpStatus.OK).json(msg);
+        })
+            .catch(() => response
+            .status(common_1.HttpStatus.FORBIDDEN)
+            .json({ msg: "error en la edicion" }));
+    }
+    delete(response, id) {
+        this.msgService
+            .delete(id)
+            .then((msg) => {
+            response.status(common_1.HttpStatus.OK).json(msg);
+        })
+            .catch(() => response
+            .status(common_1.HttpStatus.FORBIDDEN)
+            .json({ msg: "error en la eliminacion" }));
     }
 };
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", String)
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
 ], MessagesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
 ], MessagesController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Put)(":id"),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", String)
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", void 0)
 ], MessagesController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(":id"),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)("id")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
 ], MessagesController.prototype, "delete", null);
 exports.MessagesController = MessagesController = __decorate([
-    (0, common_1.Controller)("messages")
+    (0, common_1.Controller)("messages"),
+    __metadata("design:paramtypes", [messages_service_1.MessagesService])
 ], MessagesController);
 //# sourceMappingURL=messages.controller.js.map

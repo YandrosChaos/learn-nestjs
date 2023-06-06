@@ -47,7 +47,7 @@ export class MessagesController {
   @Put(":id")
   update(@Body() newMsg: CreateMsgDto, @Res() response, @Param("id") id) {
     this.msgService
-      .update(newMsg)
+      .update(id, newMsg)
       .then((msg) => {
         response.status(HttpStatus.OK).json(msg);
       })

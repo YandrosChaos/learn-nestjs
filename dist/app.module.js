@@ -12,6 +12,8 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const messages_controller_1 = require("./messages/messages.controller");
 const typeorm_1 = require("@nestjs/typeorm");
+const messages_service_1 = require("./messages/messages.service");
+const message_entity_1 = require("./messages/entities/message.entity");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -24,12 +26,13 @@ exports.AppModule = AppModule = __decorate([
                 username: "nest",
                 password: "nest",
                 database: "sendmeapp_db",
-                entities: [__dirname + '/**/*.entity{.ts,.js}'],
+                entities: [__dirname + "/**/*.entity{.ts,.js}"],
                 synchronize: true,
             }),
+            typeorm_1.TypeOrmModule.forFeature([message_entity_1.Message]),
         ],
         controllers: [app_controller_1.AppController, messages_controller_1.MessagesController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, messages_service_1.MessagesService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
